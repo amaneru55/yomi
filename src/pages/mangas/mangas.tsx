@@ -1,18 +1,11 @@
-import { motion } from "framer-motion";
-import { type FC, useEffect } from "react";
+import { type FC, lazy, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import { PriamryPath } from "@/enums/path";
 
-const cover =
-	"https://mangadex.org/covers/312e47bc-5749-4be8-8a23-19f1f909949d/0c990fa1-2c77-45f7-a5fb-4324517f8afe.jpg";
+import { mangaData } from "./mock-data";
 
-const mangas = [
-	{
-		cover,
-		id: "1",
-	},
-];
+const MangaCard = lazy(() => import("@ui/manga-card"));
 
 const Mangas: FC = () => {
 	const navigate = useNavigate();
@@ -24,7 +17,7 @@ const Mangas: FC = () => {
 	useEffect(() => {
 		const preloadManga = async () => {
 			try {
-				await import("@pages/manga");
+				await import("@pages/manga-detail");
 			} catch (err) {
 				console.error("Failed to preload manga component:", err);
 			}
@@ -33,24 +26,13 @@ const Mangas: FC = () => {
 	}, []);
 
 	return (
-		<div className="grid grid-cols-5 px-4 py-6">
-			{mangas.map((manga) => (
-				<div
+		<div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+			{mangaData.map((manga) => (
+				<MangaCard
 					key={manga.id}
-					className="cursor-pointer"
-					onClick={() => handlePress(manga.id)}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") {
-							handlePress(manga.id);
-						}
-					}}
-				>
-					<motion.img
-						src={manga.cover}
-						layoutId={`manga-cover-${manga.id}`}
-						className="w-full aspect-auto"
-					/>
-				</div>
+					manga={manga}
+					onPress={() => handlePress(manga.id)}
+				/>
 			))}
 		</div>
 	);
