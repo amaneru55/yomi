@@ -1,8 +1,8 @@
 [package]
 name = "yomi"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Yomi is a simple manga reader that supports reading manga from local files and online sources."
+authors = ["amaneru@163.com"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -24,4 +24,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 strum = "0.27.1"
 strum_macros = "0.27.1"
-
+mime_guess = "2.0.5"
+mime = "0.3.17"
+zip = "4.1.0"
+tauri-plugin-sql = "2"
